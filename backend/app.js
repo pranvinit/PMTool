@@ -1,6 +1,11 @@
 require("dotenv").config();
+const colors = require("colors");
 const express = require("express");
 const app = express();
+
+// GraphQL
+const { graphqlHTTP } = require("express-graphql");
+const schema = require("./schema/schema");
 
 // database
 const connectDB = require("./db/connect");
@@ -9,7 +14,6 @@ const connectDB = require("./db/connect");
 const cors = require("cors");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
-const cookieParser = require("cookie-parser");
 
 app.use(
   cors({
@@ -22,15 +26,23 @@ app.use(morgan("tiny"));
 
 app.set("trust proxy", 1);
 app.use(rateLimit({ windowMs: 1 * 60 * 1000, max: 100 }));
-app.use(cookieParser(process.env.SIGNED_COOKIE_SECRET));
+
+// Routes
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema,
+    graphiql: process.env.NODE_ENV === "development",
+  })
+);
 
 const PORT = process.env.PORT || 5000;
 const start = async () => {
   try {
-    await connectDB();
-
+    await connectDB(process.env.MONGO_URI);
+    console.log("Connected to MongoDB".blue.underline.bold);
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+      console.log(`Server running on port ${PORT}`.yellow.underline.bold);
     });
   } catch (err) {
     console.log(err);

@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
@@ -14,11 +15,14 @@
     "nodemon": "^2.0.20"
   },
   "dependencies": {
+    "colors": "^1.4.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-graphql": "^0.12.0",
     "express-rate-limit": "^6.7.0",
+    "graphql": "^16.6.0",
     "mongoose": "^6.7.3"
   }
 }
