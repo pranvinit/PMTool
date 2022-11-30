@@ -13,6 +13,8 @@ const {
 const Client = require("../models/Client");
 const Project = require("../models/Project");
 
+// Types defines attributes and handle validation
+
 // Client Type
 const ClientType = new GraphQLObjectType({
   name: "Client",
@@ -41,6 +43,8 @@ const ProjectType = new GraphQLObjectType({
     },
   }),
 });
+
+// Querying or Reading data
 
 // Root
 const RootQuery = new GraphQLObjectType({
@@ -74,6 +78,8 @@ const RootQuery = new GraphQLObjectType({
     },
   },
 });
+
+// Manipulating data
 
 // Mutations
 const mutation = new GraphQLObjectType({
